@@ -48,6 +48,7 @@ def build_free_signal_menu():
         [InlineKeyboardButton("📌 Cách đọc tín hiệu", callback_data="free_read_signal")],
         [InlineKeyboardButton("🕒 Khung giờ trade đẹp", callback_data="free_trade_time")],
         [InlineKeyboardButton("🛡 Quản lý vốn cơ bản", callback_data="free_risk")],
+        [InlineKeyboardButton("☎️ Liên hệ admin hỗ trợ", url=build_private_link("contact_admin"))],
         [InlineKeyboardButton("⬅️ Quay lại menu chính", callback_data="back_private_main")],
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -57,6 +58,7 @@ def build_vip_menu():
         [InlineKeyboardButton("💎 Quyền lợi nhóm V.I.P", callback_data="vip_benefits")],
         [InlineKeyboardButton("🎯 Ai phù hợp với V.I.P", callback_data="vip_fit")],
         [InlineKeyboardButton("📩 Cách tham gia", callback_data="vip_join")],
+        [InlineKeyboardButton("☎️ Liên hệ admin hỗ trợ", url=build_private_link("contact_admin"))],
         [InlineKeyboardButton("⬅️ Quay lại menu chính", callback_data="back_private_main")],
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -74,6 +76,7 @@ def build_newbie_menu():
         [InlineKeyboardButton("📘 Bắt đầu từ đâu", callback_data="newbie_start")],
         [InlineKeyboardButton("💰 Quản lý vốn cơ bản", callback_data="newbie_risk")],
         [InlineKeyboardButton("⛔ Những lỗi người mới hay mắc", callback_data="newbie_mistakes")],
+        [InlineKeyboardButton("☎️ Liên hệ admin hỗ trợ", url=build_private_link("contact_admin"))],
         [InlineKeyboardButton("⬅️ Quay lại lộ trình", callback_data="back_roadmap")],
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -83,6 +86,7 @@ def build_experienced_menu():
         [InlineKeyboardButton("🎯 Tối ưu điểm vào lệnh", callback_data="exp_entry")],
         [InlineKeyboardButton("📊 Lọc tín hiệu chất lượng", callback_data="exp_filter_signal")],
         [InlineKeyboardButton("⚙️ Quản lý vốn nâng cao", callback_data="exp_risk")],
+        [InlineKeyboardButton("☎️ Liên hệ admin hỗ trợ", url=build_private_link("contact_admin"))],
         [InlineKeyboardButton("⬅️ Quay lại lộ trình", callback_data="back_roadmap")],
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -143,7 +147,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if payload == "":
         await message.reply_text(
             text=(
-                "👋 Chào mừng bạn đến với bot Trading Gold.\n\n"
+                "👋 Chào mừng bạn đến với Bot Support Trading Gold.\n\n"
                 "Chọn mục phù hợp bên dưới:"
             ),
             reply_markup=build_private_main_menu()
