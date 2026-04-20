@@ -120,12 +120,18 @@ async def welcome_new_members(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     if not message.new_chat_members:
         return
+    
+    print("=== NEW_CHAT_MEMBERS EVENT ===")
+    print("Chat ID:", update.effective_chat.id)
+    print("Chat title:", update.effective_chat.title)
+    print("Members joined:", [m.full_name for m in message.new_chat_members])
 
     for member in message.new_chat_members:
         if member.id == context.bot.id:
             continue
 
-        await message.reply_text(
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
             text=f"{WELCOME_TEXT}\n\n🎯 Chào mừng {member.full_name}",
             reply_markup=build_main_menu()
         )
