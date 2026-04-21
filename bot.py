@@ -1,10 +1,11 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ChatMember
 from telegram.ext import (
     ApplicationBuilder,
     ContextTypes,
     MessageHandler,
     CallbackQueryHandler,
     CommandHandler,
+    ChatMemberHandler,
     filters,
 )
 
@@ -136,6 +137,40 @@ async def welcome_new_members(update: Update, context: ContextTypes.DEFAULT_TYPE
             reply_markup=build_main_menu()
         )
 
+async def welcome_chat_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    result = update.chat_member
+
+    if not result:
+        return
+
+    old_status = result.old_chat_member.status
+    new_status = result.new_chat_member.status
+    user = result.new_chat_member.user
+
+    print("=== CHAT_MEMBER EVENT ===")
+    print("Chat ID:", result.chat.id)
+    print("Chat title:", result.chat.title)
+    print("User:", user.full_name)
+    print("Old status:", old_status)
+    print("New status:", new_status)
+
+    joined = old_status in {ChatMember.LEFT, ChatMember.BANNED} and new_status in {
+        ChatMember.MEMBER,
+        ChatMember.RESTRICTED,
+        ChatMember.ADMINISTRATOR,
+    }
+
+    if not joined:
+        return
+
+    if user.id == context.bot.id:
+        return
+
+    await context.bot.send_message(
+        chat_id=result.chat.id,
+        text=f"{WELCOME_TEXT}\n\n🎯 Chào mừng {user.full_name}",
+        reply_markup=build_main_menu()
+    )
 # =========================
 # 7. LENH /start TRONG CHAT RIENG
 # =========================
@@ -462,6 +497,10 @@ def main():
         MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome_new_members)
     )
 
+    app.add_handler(
+        ChatMemberHandler(welcome_chat_member, ChatMemberHandler.CHAT_MEMBER)
+    )
+
     # Private chat: /start
     app.add_handler(CommandHandler("start", start_command))
 
@@ -469,7 +508,7 @@ def main():
     app.add_handler(CallbackQueryHandler(handle_buttons))
 
     print("Bot đang chạy...")
-    app.run_polling()
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
