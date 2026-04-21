@@ -131,11 +131,15 @@ async def welcome_new_members(update: Update, context: ContextTypes.DEFAULT_TYPE
         if member.id == context.bot.id:
             continue
 
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=f"{WELCOME_TEXT}\n\n🎯 Chào mừng {member.full_name}",
-            reply_markup=build_main_menu()
-        )
+        try:
+            await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=f"{WELCOME_TEXT}\n\n🎯 Chào mừng {member.full_name}",
+                reply_markup=build_main_menu()
+            )
+            print("Welcome message sent successfully")
+        except Exception as e:
+            print("Send welcome failed:", e)
 
 async def welcome_chat_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     result = update.chat_member
