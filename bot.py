@@ -12,7 +12,7 @@ from telegram.ext import (
 # =========================
 # 1. THONG TIN BOT
 # =========================
-BOT_TOKEN = "8700458186:AAGkBmnGhb4_yWdyMoCV4q-BwH_1FBP8kf4"
+BOT_TOKEN = "8700458186:AAHOpApuP1DDloKGSCDi_6Q--gofbpmaYJI"
 BOT_USERNAME = "wellcome_gold_bot"  # khong co @
 
 # =========================
